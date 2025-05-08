@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テスト設計</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>テスト設計の課題と改善策を、アンケート結果とベストプラクティスに基づき体系的に整理しました。</p>
+<h2 id="主要課題と具体策">主要課題と具体策</h2>
+<h3 id="テスト網羅性の不安定さ">1. テスト網羅性の不安定さ</h3>
+<p><strong>課題</strong>: パターンの組み合わせ爆発/権限テストの見落とし/レビュー基準の不一致</p>
+<ul>
+<li><strong>改善策</strong>:
+<ul>
+<li><strong>リスクベース優先順位付け</strong>: 影響度×発生頻度マトリクスで優先テスト領域を可視化[4]</li>
+<li><strong>ペアワイズ法導入</strong>: 78%の組み合わせパターンを削減可能（例: N-wiseツール）[4][5]</li>
+<li><strong>Salesforce権限テストキット</strong>: Profile/PS開発後、Permission Set Testerなど自動化ツール活用[2][5]</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-apex"><code class="prism  language-apex">// 権限テスト例（System.runAs()活用）
+@isTest
+private class PermissionTest {
+    static testMethod void testMarketingProfile() {
+        User u = [SELECT Id FROM User WHERE Profile.Name = 'Marketing' LIMIT 1];
+        System.runAs(u) {
+            // オブジェクト/フィールドアクセス権検証
+            System.assertEquals(false, Schema.sObjectType.Account.isAccessible());
+        }
+    }
+}
+</code></pre>
+<h3 id="テスト設計の非効率性">2. テスト設計の非効率性</h3>
+<p><strong>課題</strong>: フォーマット不統一/変更対応遅延/データ準備負荷</p>
+<ul>
+<li><strong>改善策</strong>:
+<ul>
+<li><strong>標準テンプレート開発</strong>:
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>基本フォーマット</th>
+<th>拡張フォーマット</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正常系</td>
+<td>デシジョンテーブル</td>
+<td>状態遷移図</td>
+</tr>
+<tr>
+<td>異常系</td>
+<td>境界値分析</td>
+<td>原因結果グラフ</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><strong>モジュール化設計</strong>: 入力値/期待結果をExcelマクロ連携で動的生成[4][5]</li>
+<li><strong>テストデータ工場パターン</strong>: Apexテストデータ生成クラスの共通化[2]</li>
+</ul>
+</li>
+</ul>
+<h3 id="品質保証プロセスの脆弱性">3. 品質保証プロセスの脆弱性</h3>
+<p><strong>課題</strong>: 属人化/レビュー遅延/回帰テスト不足</p>
+<ul>
+<li><strong>改善策</strong>:
+<ul>
+<li><strong>3段階検証フロー</strong>:
+<ol>
+<li>開発者: 単体テスト（Apex 75%以上カバレッジ[2]）</li>
+<li>テスター: 自動化シナリオ実行</li>
+<li>顧客: 探索的テストセッション</li>
+</ol>
+</li>
+<li><strong>継続的テスト統合</strong>:<pre class=" language-bash"><code class="prism  language-bash"><span class="token comment"># CI/CDパイプライン例</span>
+sfdx force:source:deploy --checkonly --testlevel RunLocalTests
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="変更管理の非効率性">4. 変更管理の非効率性</h3>
+<p><strong>課題</strong>: 要件変更頻発/手戻り多発</p>
+<ul>
+<li><strong>改善策</strong>:
+<ul>
+<li><strong>リグレッションテスト自働化</strong>:<pre class=" language-mermaid"><svg id="mermaid-svg-EUPCQ1GmwSQyxt7Q" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="162.44125366210938" style="max-width: 723.6412353515625px;" viewBox="0 0.0000152587890625 723.6412353515625 162.44125366210938"><style>#mermaid-svg-EUPCQ1GmwSQyxt7Q{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .error-icon{fill:#552222;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .marker{fill:#666;stroke:#666;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .marker.cross{stroke:#666;}#mermaid-svg-EUPCQ1GmwSQyxt7Q svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .cluster-label text{fill:#333;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .cluster-label span{color:#333;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .label text,#mermaid-svg-EUPCQ1GmwSQyxt7Q span{fill:#000000;color:#000000;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .node rect,#mermaid-svg-EUPCQ1GmwSQyxt7Q .node circle,#mermaid-svg-EUPCQ1GmwSQyxt7Q .node ellipse,#mermaid-svg-EUPCQ1GmwSQyxt7Q .node polygon,#mermaid-svg-EUPCQ1GmwSQyxt7Q .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .node .label{text-align:center;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .node.clickable{cursor:pointer;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .arrowheadPath{fill:#333333;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .cluster text{fill:#333;}#mermaid-svg-EUPCQ1GmwSQyxt7Q .cluster span{color:#333;}#mermaid-svg-EUPCQ1GmwSQyxt7Q div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-EUPCQ1GmwSQyxt7Q:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-EUPCQ1GmwSQyxt7Q flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-A LE-B" id="L-A-B" style="opacity: 1;"><path class="path" d="M92,81.22062683105469L117,81.22062683105469L142.5000020027161,81.72062683105469" marker-end="url(https://stackedit.io/app#arrowhead73)" style="fill:none"></path><defs><marker id="arrowhead73" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-B LE-C" id="L-B-C" style="opacity: 1;"><path class="path" d="M266.0356596308232,58.81503480248456L321.4412536621094,32.864376068115234L354.4412536621094,32.864376068115234" marker-end="url(https://stackedit.io/app#arrowhead74)" style="fill:none"></path><defs><marker id="arrowhead74" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-B LE-D" id="L-B-D" style="opacity: 1;"><path class="path" d="M266.03565687840955,104.62621760660637L321.4412536621094,129.57687759399414L354.51625061035156,129.57687759399414" marker-end="url(https://stackedit.io/app#arrowhead75)" style="fill:none"></path><defs><marker id="arrowhead75" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath LS-C LE-E" id="L-C-E" style="opacity: 1;"><path class="path" d="M533.6412506103516,32.864376068115234L558.6412506103516,32.864376068115234L583.6412506103516,32.864376068115234" marker-end="url(https://stackedit.io/app#arrowhead76)" style="fill:none"></path><defs><marker id="arrowhead76" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-A-B" class="edgeLabel L-LS-A' L-LE-B"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(321.4412536621094,32.864376068115234)" style="opacity: 1;"><g transform="translate(-8,-13.356249809265137)" class="label"><rect rx="0" ry="0" width="16" height="26.712499618530273"></rect><foreignObject width="16" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-B-C" class="edgeLabel L-LS-B' L-LE-C">高</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(321.4412536621094,129.57687759399414)" style="opacity: 1;"><g transform="translate(-8,-13.356249809265137)" class="label"><rect rx="0" ry="0" width="16" height="26.712499618530273"></rect><foreignObject width="16" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-B-D" class="edgeLabel L-LS-B' L-LE-D">低</span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-C-E" class="edgeLabel L-LS-C' L-LE-E"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-296" transform="translate(50,81.22062683105469)" style="opacity: 1;"><rect rx="0" ry="0" x="-42" y="-23.356249809265137" width="84" height="46.71249961853027" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-32,-13.356249809265137)"><foreignObject width="64" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">変更要求</div></foreignObject></g></g></g><g class="node default" id="flowchart-B-297" transform="translate(215.2206268310547,81.22062683105469)" style="opacity: 1;"><polygon points="73.22062482833863,0 146.44124965667726,-73.22062482833863 73.22062482833863,-146.44124965667726 0,-73.22062482833863" transform="translate(-73.22062482833863,73.22062482833863)" class="label-container"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-48,-13.356249809265137)"><foreignObject width="96" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">影響範囲分析</div></foreignObject></g></g></g><g class="node default" id="flowchart-C-299" transform="translate(444.04125213623047,32.864376068115234)" style="opacity: 1;"><rect rx="0" ry="0" x="-89.5999984741211" y="-23.356249809265137" width="179.1999969482422" height="46.71249961853027" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-79.5999984741211,-13.356249809265137)"><foreignObject width="159.1999969482422" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">関連テストケース抽出</div></foreignObject></g></g></g><g class="node default" id="flowchart-D-301" transform="translate(444.04125213623047,129.57687759399414)" style="opacity: 1;"><rect rx="0" ry="0" x="-89.5250015258789" y="-23.356249809265137" width="179.0500030517578" height="46.71249961853027" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-79.5250015258789,-13.356249809265137)"><foreignObject width="159.0500030517578" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">サニティチェック実行</div></foreignObject></g></g></g><g class="node default" id="flowchart-E-303" transform="translate(649.6412506103516,32.864376068115234)" style="opacity: 1;"><rect rx="0" ry="0" x="-66" y="-23.356249809265137" width="132" height="46.71249961853027" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-56,-13.356249809265137)"><foreignObject width="112" height="26.712499618530273"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">自動テスト実行</div></foreignObject></g></g></g></g></g></g></svg></pre>
+</li>
+<li><strong>リビジョン管理システム</strong>: TestRail/QTestとの連携で変更履歴追跡[5]</li>
+</ul>
+</li>
+</ul>
+<h2 id="効果検証指標">効果検証指標</h2>
+
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>現状値</th>
+<th>目標値</th>
+<th>測定方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>テスト設計工数</td>
+<td>40%</td>
+<td>25%</td>
+<td>JIRA時間追跡</td>
+</tr>
+<tr>
+<td>権限関連障害件数</td>
+<td>3件/月</td>
+<td>0件</td>
+<td>障害管理DB</td>
+</tr>
+<tr>
+<td>レビュー反復率</td>
+<td>2.3回</td>
+<td>1.5回</td>
+<td>GitLab MR分析</td>
+</tr>
+<tr>
+<td>自動化率</td>
+<td>35%</td>
+<td>60%</td>
+<td>テスト管理ツール</td>
+</tr>
+</tbody>
+</table><p>これらの改善策を実装する際は、SalesforceのSandbox環境での段階的導入（開発者Sandbox→Full Copy→Partial Copy[1]）が推奨されます。テスト並列実行時のデータ競合対策には<code>@TestVisible</code>アノテーションを活用し、バッチ処理テストでは<code>startTest/stopTest</code>で非同期処理を制御します[2]。</p>
+<p>Apexテストクラス設計時は、20レコード以上のバルクテストを必須化し、ORDER BY句による処理順序保証が有効です[2]。UIテストではLightningデバッグモードと<code>ApexTestResult</code>のリアルタイム監視を組み合わせ、テストフィードバックループを短縮します。</p>
+</div>
+</body>
+
+</html>
