@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>s_test計画</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Salesforceテスト計画に関する課題と改善策を、アンケート結果とSalesforce公式ガイドラインを基に分析します。主な課題は「計画定義の曖昧さ」「工数見積精度」「範囲管理の不備」に集約されます。</p>
+<h2 id="テスト計画標準化フレームワーク">テスト計画標準化フレームワーク</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>計画内容の定義不明確</li>
+<li>プロジェクト間でのベストプラクティス共有不足</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important"><span class="token punctuation">#</span> Salesforceテスト計画テンプレート（概要）</span>
+<span class="token list punctuation">1.</span> <span class="token bold"><span class="token punctuation">**</span>テスト方針<span class="token punctuation">**</span></span>
+   <span class="token list punctuation">-</span> 対象範囲：API 20%/UI 30%/Integration 50%
+   <span class="token list punctuation">-</span> 品質基準：コードカバレッジ75%以上<span class="token url">[1][<span class="token variable">4</span>]</span>
+
+<span class="token list punctuation">2.</span> <span class="token bold"><span class="token punctuation">**</span>リスクマトリクス<span class="token punctuation">**</span></span>
+   | リスク要因 | 発生確率 | 影響度 | 対策 |
+   |---|---|---|---|
+   | 要変更 | 高 | 高 | 変更管理委員会設置 |
+
+<span class="token list punctuation">3.</span> <span class="token bold"><span class="token punctuation">**</span>役割定義<span class="token punctuation">**</span></span>
+   <span class="token list punctuation">-</span> テスト管理者：計画策定/進捗管理
+   <span class="token list punctuation">-</span> 自動化エンジニア：回帰テストスクリプト作成[3]
+</code></pre>
+<h2 id="工数見積aiモデル導入">工数見積AIモデル導入</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>経験ベースの見積り誤差</li>
+<li>変更影響範囲の見積り困難</li>
+</ul>
+<p><strong>改善策：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>従来手法</th>
+<th>AI導入後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>精度誤差</strong></td>
+<td>±35%</td>
+<td>±12%</td>
+</tr>
+<tr>
+<td><strong>更新頻度</strong></td>
+<td>月次</td>
+<td>リアルタイム[3]</td>
+</tr>
+</tbody>
+</table><ul>
+<li><strong>Copado AI Estimator</strong>：過去プロジェクトデータを学習した予測モデル[3]</li>
+<li><strong>テストケース複雑度指数</strong>：<br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>C</mi><mo>=</mo><mo stretchy="false">(</mo><mi>F</mi><mo>×</mo><mn>0.4</mn><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mi>R</mi><mo>×</mo><mn>0.3</mn><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mi>D</mi><mo>×</mo><mn>0.3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex"> C = (F \times 0.4) + (R \times 0.3) + (D \times 0.3) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathnormal" style="margin-right: 0.07153em;">C</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right: 0.13889em;">F</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord">0.4</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right: 0.00773em;">R</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord">0.3</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right: 0.02778em;">D</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord">0.3</span><span class="mclose">)</span></span></span></span></span></span><br>
+※F:機能数, R:連携システム数, D:データ量</li>
+</ul>
+<h2 id="テスト範囲管理手法">テスト範囲管理手法</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>網羅性と工数のトレードオフ</li>
+<li>変更影響分析の不備</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- Apexテスト範囲分析クエリ[1]</span>
+<span class="token keyword">SELECT</span> CoveragePercent <span class="token keyword">FROM</span> ApexClass 
+<span class="token keyword">WHERE</span> Name <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token string">'TriggerHandler'</span><span class="token punctuation">,</span> <span class="token string">'ServiceClass'</span><span class="token punctuation">)</span>
+</code></pre>
+<ol>
+<li>
+<p><strong>影響度マトリクス</strong>：</p>
+<ul>
+<li>高リスク機能：100%条件網羅</li>
+<li>中リスク：基本シナリオ+エッジケース20%</li>
+<li>低リスク：サニティチェックのみ</li>
+</ul>
+</li>
+<li>
+<p><strong>自動リグレッションテスト範囲</strong>：</p>
+<pre class=" language-bash"><code class="prism  language-bash">sfdx force:source:deploy --testlevel RunLocalTests
+</code></pre>
+</li>
+</ol>
+<h2 id="変更管理プロセス最適化">変更管理プロセス最適化</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>仕様変更による計画遅延</li>
+<li>ツール間のステータス不整合</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<ul>
+<li><strong>変更管理チェーン</strong>：<br>
+要件変更 → JIRAチケット生成 → テスト計画自動更新[3]</li>
+<li><strong>Salesforce DX統合</strong>：<pre class=" language-bash"><code class="prism  language-bash">sfdx force:data:tree:import -p data-plan.json
+</code></pre>
+</li>
+</ul>
+<h2 id="ベンダー連携標準化">ベンダー連携標準化</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>外部テストチームとの連携不足</li>
+<li>UAT進捗管理の非効率性</li>
+</ul>
+<p><strong>改善策：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>内部テスト</th>
+<th>外部UAT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>開始条件</strong></td>
+<td>コードカバレッジ75%</td>
+<td>主要シナリオ100%合格</td>
+</tr>
+<tr>
+<td><strong>データ同期</strong></td>
+<td>Sandboxデータコピー</td>
+<td>合成データ生成[3]</td>
+</tr>
+<tr>
+<td><strong>進捗可視化</strong></td>
+<td>DevOpsダッシュボード</td>
+<td>顧客向けポータル[5]</td>
+</tr>
+</tbody>
+</table><h2 id="教育プログラム整備">教育プログラム整備</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>計画策定スキルのばらつき</li>
+<li>新人教育コスト</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<ul>
+<li><strong>Trailheadカスタムモジュール</strong>：<br>
+<code>テスト計画の鉄則 101</code> 修了必須化[4]</li>
+<li><strong>模擬プロジェクト演習</strong>：<br>
+3ヶ月サイクルで実戦型トレーニング実施</li>
+</ul>
+<p>これらの改善策を実施した某企業事例では、テスト工数誤差が42%改善、リグレッションテスト時間が67%短縮された実績があります[3][5]。特にAIを活用した影響範囲分析で変更対応工数を58%削減し、標準テンプレート導入により計画策定時間を3/4に短縮しました[1][3]。</p>
+</div>
+</body>
+
+</html>
