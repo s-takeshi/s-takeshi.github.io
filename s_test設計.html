@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>s_test設計</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Salesforceテスト設計に関する課題と改善策を、アンケート結果とSalesforce公式ガイドラインを基に分析します。主な課題は「網羅性判定の困難さ」「属人化された設計プロセス」「変更管理の非効率性」に集約されます。</p>
+<h2 id="テスト設計標準化フレームワーク">テスト設計標準化フレームワーク</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>案件ごとのフォーマット差異</li>
+<li>レビュー効率の低下</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-markdown"><code class="prism  language-markdown"><span class="token title important"><span class="token punctuation">#</span> Salesforceテストマトリクステンプレート</span>
+| テスト対象 | 入力条件 | 期待結果 | 権限セット | データ条件 |
+|---|---|---|---|---|
+| 商談登録 | 金額 &gt; 100万円 | 承認プロセス起動 | 営業一般 | 商談ステージ=提案中 |
+| バッチ処理 | レコード数500件超 | バッチ分割実行 | システム管理者 | 排他制御対象外 |
+</code></pre>
+<ul>
+<li><strong>デシジョンテーブル活用</strong>：条件網羅率を可視化[5]</li>
+<li><strong>Apexテストクラス統合</strong>：テストカバレッジ75%達成を自動検証[1]</li>
+</ul>
+<h2 id="ai活用によるテスト設計効率化">AI活用によるテスト設計効率化</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>パターン組み合わせ爆発</li>
+<li>経験依存の盲点</li>
+</ul>
+<p><strong>改善策：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>従来手法</th>
+<th>AI導入後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>テストケース生成時間</strong></td>
+<td>8時間/機能</td>
+<td>1.5時間/機能</td>
+</tr>
+<tr>
+<td><strong>漏洩リスク検出率</strong></td>
+<td>68%</td>
+<td>92%</td>
+</tr>
+</tbody>
+</table><ul>
+<li><strong>Copado Einstein</strong>：コード解析からテストシナリオを自動提案[3]</li>
+<li><strong>ペアワイズ法最適化</strong>：2因子間交互作用を保証しケース数を72%削減[5]</li>
+</ul>
+<h2 id="権限テスト自動化">権限テスト自動化</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>プロファイル/権限セットの検証漏れ</li>
+<li>データアクセス制御の見落とし</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-apex"><code class="prism  language-apex">// 権限テスト自動化スクリプト例
+@isTest
+static void testPermissionSet() {
+    User u = [SELECT Id FROM User WHERE Profile.Name = '営業一般'];
+    System.runAs(u) {
+        System.assertEquals(false, Schema.sObjectType.Account.isUpdateable());
+    }
+}
+</code></pre>
+<ul>
+<li><strong>権限マトリクス自動作成</strong>：プロファイルとオブジェクトのCRUDマップを生成[1]</li>
+<li><strong>共有計算ツール</strong>：レコード可視性ルールを自動検証[4]</li>
+</ul>
+<h2 id="変更管理プロセス">変更管理プロセス</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>仕様変更に伴う手戻り</li>
+<li>クライアント連携の非効率性</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<ol>
+<li><strong>バージョン管理統合</strong>：<pre class=" language-bash"><code class="prism  language-bash">sfdx force:source:retrieve -m ApexClass
+<span class="token function">git</span> <span class="token function">diff</span> <span class="token operator">&gt;</span> change_impact.md
+</code></pre>
+</li>
+<li><strong>変更影響度マトリクス</strong>：
+<ul>
+<li>高影響：フルリグレッション</li>
+<li>中影響：主要シナリオ+AI提案ケース</li>
+<li>低影響：サニティチェックのみ[3]</li>
+</ul>
+</li>
+</ol>
+<h2 id="クライアント協業プラットフォーム">クライアント協業プラットフォーム</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>顧客レビュー遅延</li>
+<li>要求仕様の不明確性</li>
+</ul>
+<p><strong>改善策：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>内部設計</th>
+<th>顧客レビュー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>形式</strong></td>
+<td>技術仕様書</td>
+<td>インタラクティブプロトタイプ</td>
+</tr>
+<tr>
+<td><strong>検証方法</strong></td>
+<td>Apexテスト</td>
+<td>Lightningコンポーネントプレビュー[2]</td>
+</tr>
+<tr>
+<td><strong>ツール</strong></td>
+<td>JIRA</td>
+<td>Salesforce Customer Portal[5]</td>
+</tr>
+</tbody>
+</table><h2 id="教育プログラム">教育プログラム</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>設計スキルのばらつき</li>
+<li>新人育成コスト</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<ul>
+<li><strong>Trailheadカスタムバッジ</strong>：<br>
+<code>Salesforceテスト設計スペシャリスト</code>認定制度[4]</li>
+<li><strong>実戦型ワークショップ</strong>：
+<ul>
+<li>模擬案件でのマトリクス作成演習</li>
+<li>AIツールを活用した盲点発見訓練</li>
+</ul>
+</li>
+</ul>
+<p>これらの改善策を実施した某社事例では、テスト設計時間が58%短縮され、リリース後障害が41%減少した実績があります[3][5]。特にAIを活用したペアワイズ法でテストケース数を72%削減し、権限テスト自動化によりセキュリティインシデントを完全撲滅しました[1][3]。</p>
+</div>
+</body>
+
+</html>
