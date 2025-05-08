@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>s_test実施</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Salesforceのテスト実施における課題と改善策を、アンケート結果と公式ベストプラクティスを基に分析します。主な課題は「テストケースの一貫性不足」「手動テストの非効率性」「環境差異への対応」に集約されます。</p>
+<h2 id="テストケース標準化と自動生成">テストケース標準化と自動生成</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>作成者/実施者の認識差異による手戻り</li>
+<li>ケース記載粒度のばらつき</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-gherkin"><code class="prism  language-gherkin"><span class="token comment"># BDD形式テストケーステンプレート</span>
+<span class="token feature"><span class="token keyword">Feature:</span><span class="token important"> 商談承認プロセス</span>
+</span>  <span class="token scenario"><span class="token keyword">Scenario:</span><span class="token important"> 通常承認フロー</span></span>
+    <span class="token atrule">Given</span> 営業一般ユーザーでログイン
+    <span class="token atrule">When</span> 100万円超の商談を登録
+    <span class="token atrule">Then</span> 承認プロセスが起動すること
+    <span class="token atrule">And</span> システム管理者に通知が送信される
+</code></pre>
+<ul>
+<li><strong>BDD（Behavior-Driven Development）導入</strong>：自然言語形式で仕様を定義し、開発者/テスター間の認識齟齬を解消[2]</li>
+<li><strong>Copado Einsteinの活用</strong>：AIがユーザーストーリーからテストケースを自動生成[3]</li>
+</ul>
+<h2 id="テスト自動化戦略">テスト自動化戦略</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>反復テストの時間的負担</li>
+<li>新人依存による速度差</li>
+</ul>
+<p><strong>改善策：</strong></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>手動テスト</th>
+<th>自動テスト</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>対象</strong></td>
+<td>探索的テスト</td>
+<td>回帰テスト</td>
+</tr>
+<tr>
+<td><strong>実施頻度</strong></td>
+<td>初回のみ</td>
+<td>毎週</td>
+</tr>
+<tr>
+<td><strong>ツール</strong></td>
+<td>Excel</td>
+<td>Selenium/Provar[4]</td>
+</tr>
+</tbody>
+</table><ul>
+<li><strong>Apexテストクラスの強化</strong>：コードカバレッジ75%以上を自動検証[1]</li>
+</ul>
+<pre class=" language-apex"><code class="prism  language-apex">@isTest
+static void testOpportunityApproval() {
+    User salesUser = TestDataFactory.createUser('営業一般');
+    System.runAs(salesUser) {
+        Opportunity opp = TestDataFactory.createOpp(1500000);
+        System.assertEquals('Pending Approval', opp.StageName);
+    }
+}
+</code></pre>
+<h2 id="クロスプラットフォーム対応">クロスプラットフォーム対応</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>複数OS/端末でのテスト重複</li>
+<li>古い端末での検証問題</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token comment"># BrowserStackコマンド例</span>
+browserstack-local --key <span class="token variable">$ACCESS_KEY</span> --local-identifier salesforce-test
+</code></pre>
+<ul>
+<li><strong>クラウドデバイスファーム活用</strong>：BrowserStackで3,000+環境にアクセス[4]</li>
+<li><strong>Lightning Web Componentテスト</strong>：Jestを利用したUIコンポーネント単体テスト[1]</li>
+</ul>
+<h2 id="権限管理の強化">権限管理の強化</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>権限設定ミスによるテスト漏れ</li>
+<li>プロファイル/権限セットの検証不足</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-sql"><code class="prism  language-sql"><span class="token comment">-- 権限テスト自動化クエリ</span>
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> PermissionSetAssignment 
+<span class="token keyword">WHERE</span> AssigneeId <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> Id <span class="token keyword">FROM</span> <span class="token keyword">User</span> <span class="token keyword">WHERE</span> Profile<span class="token punctuation">.</span>Name <span class="token operator">=</span> <span class="token string">'営業一般'</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li><strong>権限マトリクス自動作成</strong>：プロファイルとオブジェクトのCRUDマップを生成[1]</li>
+<li><strong>共有計算ツール</strong>：レコード可視性ルールを自動検証[4]</li>
+</ul>
+<h2 id="cicdパイプライン構築">CI/CDパイプライン構築</h2>
+<p><strong>課題：</strong></p>
+<ul>
+<li>環境差異による再現性問題</li>
+<li>手動デプロイの時間遅延</li>
+</ul>
+<p><strong>改善策：</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token comment"># Salesforce CLIデプロイ例</span>
+sfdx force:source:deploy -x manifest/package.xml -l RunLocalTests -w 10
+</code></pre>
+<ul>
+<li><strong>毎日深夜の自動回帰テスト</strong>：Jenkinsパイプラインでテスト実行＆レポート生成[4]</li>
+<li><strong>Visual Testing導入</strong>：Percy.ioでUI変更を自動検知[3]</li>
+</ul>
+<p>これらの改善策により、某社事例ではテスト工数が42%削減、バグ検出率が35%向上しました[3][4]。特にBDD導入により要件乖離による手戻りが78%減少し、BrowserStack活用でクロスプラットフォームテスト時間を1/4に短縮できたとの報告があります。</p>
+</div>
+</body>
+
+</html>
