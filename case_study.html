@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>導入事例：不動産・建設業様 | インフォテック・サービス株式会社</title>
+    <!-- Tailwind CSS 読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        corpBlue: '#004098', /* 企業カラー */
+                        lightBlue: '#E6F0FA',
+                        accentBlue: '#00A1E0', /* Salesforceブルー */
+                        darkGray: '#333333'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-darkGray font-sans leading-relaxed antialiased">
+
+    <!-- ヘッダー（簡易版） -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-corpBlue">Infotec Service | 導入事例</div>
+            <a href="#" class="text-sm font-bold text-gray-500 hover:text-corpBlue">← 導入事例一覧へ戻る</a>
+        </div>
+    </header>
+
+    <!-- 事例タイトルヘッダー -->
+    <section class="bg-corpBlue text-white pt-16 pb-20 px-4 relative overflow-hidden">
+        <!-- 背景の装飾アクセント -->
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"></div>
+        
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="bg-accentBlue text-white text-xs font-bold px-3 py-1 rounded-full shadow">不動産・建設業</span>
+                <span class="bg-white text-corpBlue text-xs font-bold px-3 py-1 rounded-full shadow">Salesforce開発</span>
+                <span class="bg-white text-corpBlue text-xs font-bold px-3 py-1 rounded-full shadow">Experience Cloud</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold leading-tight mb-4">
+                ハードコーディングの負債から脱却。<br>
+                標準機能（Flow/LWC）への落とし込みで、ClassicからLightningへの完全移行を実現
+            </h1>
+            <p class="text-lg text-blue-100 font-medium">基幹システムの大規模移行を見据えた、将来への技術的負債解消プロジェクト</p>
+        </div>
+    </section>
+
+    <!-- 事例サマリー（3つのポイント） -->
+    <section class="max-w-5xl mx-auto px-4 -mt-10 relative z-20 mb-16">
+        <div class="bg-white rounded-xl shadow-lg p-8 border-t-4 border-accentBlue flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/3 border-r border-gray-100 pr-4">
+                <p class="text-sm font-bold text-gray-400 mb-1">背景・課題</p>
+                <p class="text-sm font-semibold mb-3 text-red-600">将来の移行費用増大とサポート終了リスク</p>
+                <p class="text-sm text-gray-600">VisualforceやJavaScriptによるハードコーディングが多数存在。基幹システムのSalesforce移行前にLightning化しないと、改修費用が膨大になる危機感。</p>
+            </div>
+            <div class="md:w-1/3 border-r border-gray-100 pr-4">
+                <p class="text-sm font-bold text-gray-400 mb-1">ソリューション</p>
+                <p class="text-sm font-semibold mb-3 text-corpBlue">標準機能・ノーコードへの徹底シフト</p>
+                <p class="text-sm text-gray-600">Visualforce画面をLightningレコードページへ。JSボタンはFlowへ移行。複雑な画面のみLWC/Auraで代替し、保守性を最大化。</p>
+            </div>
+            <div class="md:w-1/3">
+                <p class="text-sm font-bold text-gray-400 mb-1">導入効果</p>
+                <p class="text-sm font-semibold mb-3 text-green-600">カスタマイズ性向上と運用コスト削減</p>
+                <p class="text-sm text-gray-600">ノー/ローコード化により、今後の機能拡張コストを大幅削減。メジャーバージョンアップの恩恵を受けられる健全な組織（Org）へ再生。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 本文コンテンツ -->
+    <section class="max-w-4xl mx-auto px-4 pb-20">
+        
+        <!-- プロジェクトの背景 -->
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold border-b-2 border-corpBlue pb-2 mb-6 flex items-center">
+                <span class="text-corpBlue mr-2">01</span> 導入の背景と課題
+            </h2>
+            <div class="bg-red-50 p-6 rounded-lg mb-6 border border-red-100">
+                <h3 class="font-bold text-red-700 mb-3">「このままでは、基幹システムの移行費用が膨れ上がる」</h3>
+                <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                    <li>近年中に、現在の基幹システムをSalesforceへ統合・移行する大型計画が控えていた。</li>
+                    <li>現在のSalesforce組織（Org）はClassic環境であり、VisualforceやJavaScriptを用いた<strong>ハードコーディングによる独自画面・機能が多数存在</strong>していた。</li>
+                    <li>この技術的負債を抱えたまま基幹システムの機能拡張を行うと、後のLightning移行時に<strong>改修費用が天文学的に膨張するリスク</strong>、および将来的なサポート終了（機能廃止）のリスクを抱えていた。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 解決策・アプローチ -->
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold border-b-2 border-corpBlue pb-2 mb-6 flex items-center">
+                <span class="text-corpBlue mr-2">02</span> 解決策（ソリューション）
+            </h2>
+            <p class="text-gray-700 mb-6 leading-relaxed">
+                インフォテック・サービスは、単なる「プログラムの書き換え」ではなく、<strong>「Salesforceの標準機能（ノー/ローコード）への徹底的な落とし込み」</strong>をご提案しました。
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white p-6 border border-gray-200 rounded shadow-sm">
+                    <h4 class="font-bold text-corpBlue mb-2">① 画面・ボタンの標準化（Flow移行）</h4>
+                    <p class="text-sm text-gray-600">Visualforceで構築された複雑なレコード画面を、標準のLightningレコードページで再現。JSで開発された各種ボタン処理も、すべてノー/ローコード（Flow）へ移行しました。</p>
+                </div>
+                <div class="bg-white p-6 border border-gray-200 rounded shadow-sm">
+                    <h4 class="font-bold text-corpBlue mb-2">② LWC/Auraによる代替構築</h4>
+                    <p class="text-sm text-gray-600">どうしてもLightning標準機能でClassic時の動作を再現できない高度なUI要件については、最新のLWC（Lightning Web Components）またはAuraコンポーネントで代替機能を構築しました。</p>
+                </div>
+                <div class="bg-white p-6 border border-gray-200 rounded shadow-sm md:col-span-2">
+                    <h4 class="font-bold text-corpBlue mb-2">③ Experience Cloudサイトのモダナイズ</h4>
+                    <p class="text-sm text-gray-600">外部ユーザー（協力会社）向けのポータルサイトを、「SalesforceタブとVisualforce」の旧構成から最新のAuraサイト（Experience Cloud）へ移行。外部向けのUI/UXを大幅に向上させました。</p>
+                </div>
+            </div>
+
+            <!-- システム連携イメージ図 -->
+            <div class="bg-gray-100 p-8 rounded-lg text-center border border-gray-200">
+                <h4 class="font-bold text-gray-700 mb-4">業務プロセスの移行イメージ（不動産・建設業務）</h4>
+                
+                <div class="flex flex-col md:flex-row justify-center items-stretch gap-4 text-sm">
+                    <!-- お客様側 -->
+                    <div class="bg-white p-4 rounded shadow-sm flex-1 border-t-4 border-corpBlue">
+                        <div class="font-bold text-corpBlue mb-2">お客様（Salesforce Core）</div>
+                        <div class="bg-blue-50 text-blue-800 p-2 rounded mb-2 text-xs font-bold">Classic → Lightning移行</div>
+                        <ul class="text-left text-xs space-y-1 text-gray-600">
+                            <li>・工事案内受付</li>
+                            <li>・工事見積依頼</li>
+                            <li>・工事発注 / 受領確認</li>
+                            <li>・工事完了確認 / 支払通知</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 連携矢印 -->
+                    <div class="flex items-center justify-center text-gray-400">
+                        <svg class="w-8 h-8 md:-rotate-90 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </div>
+
+                    <!-- 協力会社側 -->
+                    <div class="bg-white p-4 rounded shadow-sm flex-1 border-t-4 border-accentBlue">
+                        <div class="font-bold text-accentBlue mb-2">協力会社（Experience Cloud）</div>
+                        <div class="bg-blue-50 text-blue-800 p-2 rounded mb-2 text-xs font-bold">VF → Auraサイト移行</div>
+                        <ul class="text-left text-xs space-y-1 text-gray-600">
+                            <li>・現場調査報告</li>
+                            <li>・工事見積提出</li>
+                            <li>・工事受注 / 進捗報告</li>
+                            <li>・工事完了報告</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 導入による効果 -->
+        <div class="mb-10">
+            <h2 class="text-2xl font-bold border-b-2 border-corpBlue pb-2 mb-6 flex items-center">
+                <span class="text-corpBlue mr-2">03</span> 導入効果と今後の展望
+            </h2>
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="bg-green-100 text-green-700 p-2 rounded-full mr-4 mt-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-lg">保守・改修コストの劇的な削減</h4>
+                        <p class="text-gray-600">ノー/ローコード（Flow等）化により、システム担当者自身での柔軟なカスタマイズが可能になり、今後の基幹システム拡張に伴う開発コストを大幅に削減できる基盤が整いました。</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="bg-green-100 text-green-700 p-2 rounded-full mr-4 mt-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800 text-lg">最新機能の有効活用とリスク回避</h4>
+                        <p class="text-gray-600">Lightning化を完了したことで、Salesforceの年3回のメジャーバージョンアップによる新機能の恩恵をフルに受けられるようになりました。同時に、Classicのサポート終了や機能廃止という経営上のITリスクを完全に回避しました。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- お客様の声（※マーケティング観点での追加提案枠） -->
+        <div class="bg-gray-50 border border-gray-200 p-8 rounded-lg relative">
+            <div class="absolute top-0 left-0 -mt-4 ml-6 bg-white px-2">
+                <span class="text-gray-400 font-serif text-4xl">"</span>
+            </div>
+            <p class="text-gray-700 italic font-medium leading-relaxed mb-4">
+                「他社からは『すべてスクラッチで作り直すしかない』と言われ膨大な見積もりが出ましたが、インフォテックさんは『標準機能とLWCを切り分けて、保守性を高める』という現実的かつ将来を見据えた提案をしてくれました。難易度の高いVisualforceからの脱却を、計画通りに完遂していただき感謝しています。」
+            </p>
+            <p class="text-sm text-gray-500 text-right">※このお客様の声枠は、追加ヒアリングで取得できると非常に効果的です</p>
+        </div>
+
+    </section>
+
+    <!-- フッターCTA（行動喚起） -->
+    <section class="bg-corpBlue py-12 px-4 text-center">
+        <div class="max-w-3xl mx-auto text-white">
+            <h2 class="text-2xl font-bold mb-4">自社のSalesforce環境（Classic/技術的負債）にお悩みですか？</h2>
+            <p class="mb-8 text-blue-100">インフォテック・サービスの技術者が、お客様の現在の組織（Org）を診断し、最適なLightning移行やリファクタリング計画をご提案します。</p>
+            <a href="#" class="bg-white text-corpBlue px-8 py-3 rounded-full font-bold text-lg shadow-lg hover:bg-lightBlue transition inline-block">
+                エンジニアに無料相談する
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>

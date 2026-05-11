@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インフォテック・サービス株式会社 | Salesforce現場運用・定着化サービス</title>
+    <!-- Tailwind CSS (CDN版: そのまま動きます) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- カスタムカラー設定 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0052cc', /* Salesforceブルーを意識した信頼の青 */
+                        secondary: '#172b4d', /* 濃いグレー/ネイビー */
+                        accent: '#ff8b00'  /* アクションを促すオレンジ */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- ヘッダー -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-primary tracking-tighter">
+                Infotec Service
+            </div>
+            <a href="#contact" class="bg-primary text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition">
+                無料診断に申し込む
+            </a>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション（ファーストビュー） -->
+    <section class="bg-secondary text-white py-20 px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="inline-block bg-blue-900 text-blue-200 px-3 py-1 rounded-full text-sm font-bold mb-4">
+                    Salesforce導入済み企業様向け
+                </span>
+                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                    高度な開発も。<br>
+                    泥臭い事務作業も。<br>
+                    あなたの「現場」を止めない技術者集団。
+                </h1>
+                <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                    「導入したのにExcelに戻ってしまった」「設定変更が怖くて触れない」<br>
+                    その課題、教育ではなく構造と運用の問題です。<br>
+                    最短3ヶ月で、Salesforceを本来の姿に復旧させます。
+                </p>
+                <a href="#contact" class="bg-accent text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-orange-600 transition inline-block shadow-lg">
+                    現状の課題を相談する（無料）
+                </a>
+            </div>
+            <!-- 実績バッジエリア -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/10 p-6 rounded-xl border border-white/20 text-center">
+                    <div class="text-4xl font-black text-blue-400 mb-2">730<span class="text-xl">+</span></div>
+                    <div class="text-sm font-semibold">Salesforce導入実績</div>
+                </div>
+                <div class="bg-white/10 p-6 rounded-xl border border-white/20 text-center">
+                    <div class="text-4xl font-black text-blue-400 mb-2">40<span class="text-xl">名</span></div>
+                    <div class="text-sm font-semibold">認定デベロッパー在籍</div>
+                </div>
+                <div class="bg-white/10 p-6 rounded-xl border border-white/20 text-center col-span-2">
+                    <div class="text-4xl font-black text-accent mb-2">4.7<span class="text-xl"> / 5.0</span></div>
+                    <div class="text-sm font-semibold">顧客満足度（プロジェクト完了時）</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 気づかせ役：チェックリストセクション -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-10 text-secondary">こんな「赤信号」、現場で起きていませんか？</h2>
+            <div class="bg-red-50 border-l-4 border-red-500 p-8 rounded-r-lg shadow-sm">
+                <ul class="space-y-4 text-lg">
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <span>入力完了率が体感7割未満で、結局Excelでの二重管理が復活している</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <span>運用問い合わせや例外処理が多すぎて、情シスの手が回らない</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <span>紙・PDF・押印が必要な業務プロセスがSalesforceに乗せられていない</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <span>退職や異動に伴う権限変更・引き継ぎが崩れ、事故の不安がある</span>
+                    </li>
+                </ul>
+                <div class="mt-6 text-center font-bold text-red-700">
+                    → 1つでも当てはまるなら、インフォテック・サービスにお任せください。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2つの強みセクション -->
+    <section class="py-16 px-4 bg-gray-100">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4 text-secondary">私たちが「替えが効かない」2つの理由</h2>
+            <p class="text-center text-gray-600 mb-12">コンサルティングだけではありません。私たちは現場の泥臭い課題から逃げません。</p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 強み1：技術力 -->
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-primary">
+                    <div class="text-primary font-bold mb-2">01. Tech & Speed</div>
+                    <h3 class="text-2xl font-extrabold mb-4">高度なカスタマイズを最短で</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        LWC（Lightning Web Components）、Apex、Flowを活用した複雑な要件定義に対応。ClassicからLightningへの移行や、他社が断るようなレガシー環境からの脱却・Visualforceの改修など、技術的な難所を最短3〜6ヶ月で突破します。
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li>✓ 複数案の提示とリスクの完全可視化</li>
+                        <li>✓ Experience Cloudによるマイページ構築</li>
+                        <li>✓ 他クラウド（AWS等）との安全な連携</li>
+                    </ul>
+                </div>
+
+                <!-- 強み2：事務運用代行 -->
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-accent">
+                    <div class="text-accent font-bold mb-2">02. Ops & Support</div>
+                    <h3 class="text-2xl font-extrabold mb-4">「作業」そのものを巻き取る事務運用</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        システムの保守（ID管理や権限変更）だけでなく、現場を圧迫している「日次・週次の定型作業（名寄せ、突合、データ入力代行）」まで私たちの専門要員が引き受けます。管理者が不在の企業でも確実に回る仕組みを作ります。
+                    </p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li>✓ 複雑な権限・承認フローの整理（保険・金融実績多数）</li>
+                        <li>✓ 未入力者への督促・一次問い合わせ対応</li>
+                        <li>✓ 紙・PDF業務を残したままでのエラー防止設計</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 問い合わせフォーム（診断シート風） -->
+    <section id="contact" class="py-20 px-4 bg-secondary text-white">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">エンジニアが直接回答する、無料システム診断</h2>
+            <p class="text-center text-gray-300 mb-10">営業担当ではなく、技術と運用を知り尽くした担当者が回答いたします。強引な営業は行いません。</p>
+            
+            <form class="bg-white text-gray-800 p-8 rounded-xl shadow-2xl">
+                <!-- 事前期待値調整のチェックボックス -->
+                <div class="mb-6">
+                    <label class="block font-bold text-gray-700 mb-3">現在の最も大きな課題を教えてください（複数選択可）</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center p-3 bg-gray-50 rounded border cursor-pointer hover:bg-blue-50">
+                            <input type="checkbox" class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary">
+                            <span class="ml-3">Salesforceを導入済みだが、現場に定着していない（Excelに戻っている）</span>
+                        </label>
+                        <label class="flex items-center p-3 bg-gray-50 rounded border cursor-pointer hover:bg-blue-50">
+                            <input type="checkbox" class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary">
+                            <span class="ml-3">ClassicからLightningへの移行など、大規模な改修が必要</span>
+                        </label>
+                        <label class="flex items-center p-3 bg-gray-50 rounded border cursor-pointer hover:bg-blue-50">
+                            <input type="checkbox" class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary">
+                            <span class="ml-3">現在のベンダーの技術力や提案スピードに不満がある</span>
+                        </label>
+                        <label class="flex items-center p-3 bg-gray-50 rounded border cursor-pointer hover:bg-blue-50">
+                            <input type="checkbox" class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary">
+                            <span class="ml-3">情シス不足により、日々のデータ突合や名寄せ作業まで外注したい</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">会社名</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">ご担当者名</label>
+                        <input type="text" class="w-full px-4 py-2 border rounded focus:ring-primary focus:border-primary">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-bold text-gray-700 mb-1">メールアドレス</label>
+                    <input type="email" class="w-full px-4 py-2 border rounded focus:ring-primary focus:border-primary">
+                </div>
+                
+                <button type="button" class="w-full bg-primary text-white font-bold text-lg py-4 rounded shadow hover:bg-blue-700 transition">
+                    無料診断を申し込む
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center text-sm">
+        <p>© 2026 Infotec Service Co.,Ltd. All Rights Reserved.</p>
+        <p class="mt-2 text-xs">※このページは提案用のモックアップサンプルです。</p>
+    </footer>
+
+</body>
+</html>
